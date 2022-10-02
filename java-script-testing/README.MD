@@ -14,7 +14,7 @@
 })();
 ```
 
-### Escopos diferentes em uma mesma função
+### Contextos diferentes em um mesmo escopo
 
 ```javascript
 export function fooBar() {
@@ -29,3 +29,13 @@ export function fooBar() {
   }
 }
 ```
+
+## 02 - Stubs
+
+### Nossos testes NÃO devem depender de serviços externos ou internet.
+
+Por isso utilizamos os stups para substituir o comportamento de alguma função ou classe pelo resultado que queremos.
+
+### Comando para criar um arquivo a partir do retorno de outro
+
+node service.test.js > mocks/tatooine.json
