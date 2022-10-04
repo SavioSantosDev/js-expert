@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx mocha -w */*test.js",
+    "test:cov": "npx nyc npx mocha --parallel */*.test.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "sinon": "^9.2.4"
+    "mocha": "^8.4.0",
+    "nyc": "^15.1.0",
+    "sinon": "^9.2.4",
+    "supertest": "^6.2.4"
   }
 }
