@@ -1,6 +1,6 @@
-import { BaseDto } from './base.model';
+import { Base } from './base.model';
 
-export interface CustomerDto extends BaseDto {
+export interface CustomerDto extends Base {
   age: number;
 }
 

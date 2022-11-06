@@ -1,6 +1,6 @@
-import { BaseDto } from './base.model';
+import { Base } from './base.model';
 
-export interface CarCategoryDto extends BaseDto {
+export interface CarCategoryDto extends Base {
   carIds: string[];
 }
 

@@ -1,6 +1,6 @@
-import { BaseDto } from './base.model';
+import { Base } from './base.model';
 
-export interface CarDto extends BaseDto {
+export interface CarDto extends Base {
   available: boolean;
 }
 
