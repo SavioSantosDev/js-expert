@@ -1,4 +1,5 @@
 import { createServer, IncomingMessage, Server, ServerResponse } from 'http';
+import { CarCategory } from './models';
 import { CarService } from './services';
 
 type RequestListenerFn = (request: IncomingMessage, response: ServerResponse) => Promise<void>;
@@ -36,22 +37,29 @@ export class Api {
   private getAvailableCar: RequestListenerFn = async (request, response) => {
     for await (const data of request) {
       try {
-        const carCategory = JSON.parse(data);
+        const carCategory: CarCategory = JSON.parse(data);
         // alguma validacao top aqui
 
         const result = await this.carService.getAvailableCar(carCategory);
-
-        response.writeHead(200, DEFAULT_HEADERS);
-        response.write(JSON.stringify(result));
-        response.end();
+        this.returnSuccess(response, result);
       } catch (error) {
-        console.log('error', error);
-        response.writeHead(500, DEFAULT_HEADERS);
-        response.write(JSON.stringify({ error: 'Deu Ruim!' }));
-        response.end();
+        this.returnError(response, error);
       }
     }
   };
+
+  private returnSuccess<R>(response: ServerResponse<IncomingMessage>, result: R) {
+    response.writeHead(200, DEFAULT_HEADERS);
+    response.write(JSON.stringify(result));
+    response.end();
+  }
+
+  private returnError<E>(response: ServerResponse<IncomingMessage>, error: E) {
+    // console.error('[Error]', error);
+    response.writeHead(500, DEFAULT_HEADERS);
+    response.write(JSON.stringify({ error: 'Deu Ruim!' }));
+    response.end();
+  }
 
   private defultRoute: RequestListenerFn = async (_, response) => {
     response.write(JSON.stringify({ success: 'Hello World!' }));
@@ -61,6 +69,6 @@ export class Api {
 
 export namespace Api {
   export enum Routes {
-    GET_AVAILABLE_CAR = '/getAvailableCar',
+    GET_AVAILABLE_CAR = '/get-available-car',
   }
 }

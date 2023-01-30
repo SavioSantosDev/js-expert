@@ -9,6 +9,10 @@ export class CarService {
   }
 
   async getAvailableCar(carCategory: CarCategory): Promise<Car | undefined> {
+    if (!carCategory.carIds.length) {
+      throw new Error('No car available!');
+    }
+
     return this.carRepository.findById(this.getRandomCarId(carCategory));
   }
 
@@ -17,7 +21,6 @@ export class CarService {
   }
 
   private getRandomPositionFromArray<T>(array: T[]): number {
-    const listLength = array.length;
-    return Math.floor(Math.random() * listLength);
+    return Math.floor(Math.random() * array.length);
   }
 }

@@ -28,6 +28,7 @@ describe('E2E Api suite test', () => {
   });
 
   afterEach(() => {
+    server.close();
     sandbox.restore();
   });
 
@@ -35,16 +36,39 @@ describe('E2E Api suite test', () => {
     let carCategory: CarCategory;
 
     beforeEach(async () => {
-      response = await request(server).post(Api.Routes.GET_AVAILABLE_CAR).send(carCategory).expect(200);
+      response = await request(server).post(Api.Routes.GET_AVAILABLE_CAR).send(carCategory);
+    });
+
+    describe('When it been called from a car category with no car available', () => {
+      before(() => {
+        carCategory = Mocks.carCategoryWithNoCarAvailable;
+      });
+
+      it('Should throw an error', () => {
+        expect(response.status).to.be.equal(500);
+      });
     });
 
     describe('When it been called from a car category with one car available', () => {
       before(() => {
-        carCategory = Mocks.carCategoryWithOnlyCar1Available;
+        carCategory = Mocks.carCategoryWithOneCarAvailable;
       });
 
       it('Should return the unique available car', () => {
+        expect(response.status).to.be.equal(200);
         expect(response.body).to.be.deep.equal(Mocks.car1);
+      });
+    });
+
+    describe('When it been called from a car category with three car available', () => {
+      before(() => {
+        carCategory = Mocks.carCategoryWithThreeCarAvailable;
+      });
+
+      it('Should return a random car from the car category', () => {
+        const { car1, car2, car3 } = Mocks;
+        expect(response.status).to.be.equal(200);
+        expect([car1, car2, car3]).to.be.deep.include(response.body);
       });
     });
   });
