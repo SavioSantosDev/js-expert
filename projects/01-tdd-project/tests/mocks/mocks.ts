@@ -1,4 +1,4 @@
-import { Car, CarCategory } from '../../src/models';
+import { Car, CarCategory, Customer } from '../../src/models';
 
 export namespace Mocks {
   export const car1: Car = { id: '8023dc45-16e8-4175-8cbf-5f84eee26a98', name: 'Grand Caravan', available: true };
@@ -9,17 +9,37 @@ export namespace Mocks {
     id: 'a9a3bf0d-3b45-4925-8b0f-1b29dd3ddf94',
     name: 'Roadster',
     carIds: [],
+    pricePerDay: 0,
   };
 
   export const carCategoryWithOneCarAvailable: CarCategory = {
     id: 'a9a3bf0d-3b45-4925-8b0f-1b29dd3ddf94',
     name: 'Roadster',
     carIds: [car1.id],
+    pricePerDay: 0,
   };
 
   export const carCategoryWithThreeCarAvailable: CarCategory = {
     id: 'a9a3bf0d-3b45-4925-8b0f-1b29dd3ddf94',
     name: 'Roadster',
     carIds: [car1.id, car2.id, car3.id],
+    pricePerDay: 0,
   };
+
+  export function getCarCategoryWithPrice(price: number): CarCategory {
+    return {
+      id: 'a9a3bf0d-3b45-4925-8b0f-1b29dd3ddf94',
+      name: 'Roadster',
+      carIds: [car1.id, car2.id, car3.id],
+      pricePerDay: price,
+    };
+  }
+
+  export function getCustomerWithAge(age: number): Customer {
+    return {
+      age,
+      id: 'customer-mock-id',
+      name: 'Random Customer',
+    };
+  }
 }

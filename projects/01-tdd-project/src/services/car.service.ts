@@ -2,11 +2,7 @@ import { Car, CarCategory } from '../models';
 import { BaseRepository } from '../repository';
 
 export class CarService {
-  private readonly carRepository: BaseRepository<Car>;
-
-  constructor(carsFilePath: string) {
-    this.carRepository = new BaseRepository<Car>({ filePath: carsFilePath });
-  }
+  constructor(private carRepository: BaseRepository<Car>) {}
 
   async getAvailableCar(carCategory: CarCategory): Promise<Car | undefined> {
     if (!carCategory.carIds.length) {

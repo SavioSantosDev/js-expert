@@ -8,6 +8,7 @@ export class CarCategory implements CarCategoryDto {
   id!: string;
   name!: string;
   carIds!: string[];
+  pricePerDay!: number;
 
   constructor(dto: CarCategoryDto) {
     Object.assign(this, dto);

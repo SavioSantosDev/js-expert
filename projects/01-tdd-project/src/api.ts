@@ -1,6 +1,6 @@
 import { createServer, IncomingMessage, Server, ServerResponse } from 'http';
-import { CarCategory } from './models';
-import { CarService } from './services';
+import { CarCategory, Renting } from './models';
+import { CarService, TransactionService } from './services';
 
 type RequestListenerFn = (request: IncomingMessage, response: ServerResponse) => Promise<void>;
 
@@ -10,7 +10,7 @@ const DEFAULT_HEADERS = {
 };
 
 export class Api {
-  constructor(private readonly carService: CarService) {}
+  constructor(private readonly carService: CarService, private readonly transactionService: TransactionService) {}
 
   initialize(port = DEFAULT_PORT): Server {
     const server = createServer(this.requestListener);
@@ -31,6 +31,7 @@ export class Api {
   private get routes(): { [key: string]: RequestListenerFn } {
     return {
       [`${Api.Routes.GET_AVAILABLE_CAR}:post`]: this.getAvailableCar,
+      [`${Api.Routes.GENERATE_TRANSACTION_RECEIPT}:post`]: this.generateTransactionReceipt,
     };
   }
 
@@ -43,6 +44,21 @@ export class Api {
         const result = await this.carService.getAvailableCar(carCategory);
         this.returnSuccess(response, result);
       } catch (error) {
+        this.returnError(response, error);
+      }
+    }
+  };
+
+  private generateTransactionReceipt: RequestListenerFn = async (request, response) => {
+    for await (const data of request) {
+      try {
+        const renting: Renting = JSON.parse(data);
+        // alguma validacao top aqui
+
+        const result = await this.transactionService.calculateTransactionByRenting(renting);
+        this.returnSuccess(response, result);
+      } catch (error) {
+        console.error(error);
         this.returnError(response, error);
       }
     }
@@ -70,5 +86,6 @@ export class Api {
 export namespace Api {
   export enum Routes {
     GET_AVAILABLE_CAR = '/get-available-car',
+    GENERATE_TRANSACTION_RECEIPT = '/generate-transaction-receipt',
   }
 }
