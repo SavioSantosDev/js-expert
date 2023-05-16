@@ -1,6 +1,0 @@
-{
-  "scripts": {
-    "test": "npx mocha -w --parallel *test.js",
-    "test:cov": "npx nyc npx mocha --parallel *.test.js"
-  }
-}
