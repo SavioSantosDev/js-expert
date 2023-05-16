@@ -63,13 +63,13 @@ watch(__filename, file.watch.bind(file));
 
 // Outra forma seria converter o método "watch" da classe para uma arrow function:
 class File {
-  watch(event, filename) {
+  watch = (event, filename) => {
     console.log('this', this);
     // console.log('arguments', Array.prototype.slice.call(arguments));
     // arguments só está disponível em métodos de classe ou em funções (function())
     this.showContent(filename);
-  }
-  
+  };
+
   async showContent(filename) {
     console.log((await promises.readFile(filename)).toString());
   }
