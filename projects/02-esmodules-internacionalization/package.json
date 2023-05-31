@@ -2,10 +2,10 @@
   "name": "demo02-esmodules-internacionalization",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "npx nodemon --ignore database.json --exec node --experimental-json-modules --experimental-top-level-await src/index.js",
+    "dev": "npx nodemon --ignore database.json --exec node --experimental-json-modules --experimental-top-level-await src/app.js",
     "test": "npx mocha -w --parallel test/*.test.js",
     "test:cov": "npx nyc npx mocha -r reify --parallel test/*.test.js"
   },

@@ -1,9 +1,26 @@
 [
   {
     "id": 1,
-    "vehicles": ["Motocicleta", "Carro", "Caminhão"],
+    "name": "Carro",
+    "colors": ["black", "red", "green"],
     "kmTravelled": 10000,
-    "from": "2009-01-01",
-    "to": "2020-35-12"
+    "manufacturingDate": "2020-01-01T00:00:00.000",
+    "createdDate": "2023-05-31T00:00:00.000",
+    "createdBy": "Sávio",
+    "modifiedDate": "2023-05-31T00:00:00.000",
+    "modifiedBy": "Sávio",
+    "version": 1
+  },
+  {
+    "id": 1,
+    "name": "Carro",
+    "colors": ["black", "red", "green"],
+    "kmTravelled": 10000,
+    "manufacturingDate": "2020-01-01T00:00:00.000",
+    "createdDate": "2023-05-31T00:00:00.000",
+    "createdBy": "Sávio",
+    "modifiedDate": "2023-05-31T00:00:00.000",
+    "modifiedBy": "Sávio",
+    "version": 1
   }
 ]

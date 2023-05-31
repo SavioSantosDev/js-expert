@@ -7,12 +7,12 @@ Projeto de linha de comando onde o usuário submete os valores no terminal, impr
 
 ## Descrição da funcionalidade
 
-Desenvolver aplicação via linha de comando para permitir o usuário cadastrar veiculos em um arquivo json.
+Desenvolver aplicação via linha de comando para permitir o usuário cadastrar veiculos em um arquivo .json.
 
-Cada veículo deve ter: Id, Nome, Cores disponíveis, Data de fabricação e KM rodados.
+Cada veículo deve ter: Id, Nome, Cores disponíveis, Data de fabricação, KM rodados e atributos de controle (quem e quando foi criado).
 
-- Deve inicializar perguntando o nome do usuário.
-- Após digitar o nome, deve imprimir uma mensagem de boas vindas.
+1 - Deve inicializar perguntando o nome do usuário.
+2 - Após digitar o nome, deve imprimir uma mensagem de boas vindas.
 
 Após inicializado a aplicação, deve, a toda pergunta, exibir uma lista de opções:
 
