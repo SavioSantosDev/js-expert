@@ -1,4 +1,4 @@
-import FormatUtil from '../format-util/format-util.js';
+import FormatUtil from '../../utils/format-util/format-util.js';
 
 export default class Person {
   constructor({ id, vehicles, kmTravelled, from, to }) {
