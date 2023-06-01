@@ -5,8 +5,8 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "npx nodemon --ignore database.json --exec node --experimental-json-modules --experimental-top-level-await src/app.js",
-    "test": "npx mocha -w --parallel test/*.test.js",
+    "dev": "npx nodemon --ignore database.json --exec node --experimental-json-modules --experimental-top-level-await src/app/app.js",
+    "test": "npx mocha -w --parallel src/tests/*.test.js",
     "test:cov": "npx nyc npx mocha -r reify --parallel test/*.test.js"
   },
   "dependencies": {
@@ -15,6 +15,9 @@
     "draftlog": "^1.0.12"
   },
   "devDependencies": {
+    "@types/chai": "^4.3.5",
+    "@types/mocha": "^10.0.1",
+    "@types/sinon": "^10.0.15",
     "chai": "^4.2.0",
     "mocha": "^8.2.1",
     "nodemon": "^2.0.6",
