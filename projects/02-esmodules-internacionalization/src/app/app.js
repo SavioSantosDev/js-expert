@@ -5,57 +5,7 @@ import readline from 'readline';
 // import Person from './classes/person/person.js';
 import { stdin as input, stdout as output } from 'node:process';
 import PrinterComponent from './classes/printer-component/printer-component.js';
-
-// import Vehicle from './classes/vehicle/vehicle.js';
-
-// const terminalController = new TerminalController();
-
-// Estava tendo um problema do valor sendo imprimido duas vezes no terminal, com terminal: false resolveu!
-// const terminal = readline.createInterface({ input, output, terminal: false });
-// const question = (msg) => {
-//   return new Promise((resolve) => terminal.question(msg, resolve));
-// };
-
-// const log = console.log;
-
-// async function mainLoop() {
-//   try {
-//     // const nome = await question('Qual o seu nome? ');
-
-//     // log(chalk.bold('---------------------------'));
-//     // log(`\nSeja muito bem vindo: ${chalk.bold.blue(nome)}\n`);
-//     // log(chalk.bold('---------------------------'));
-
-//     return menuLopp();
-//   } catch (error) {
-//     console.error({ error });
-//   }
-// }
-
-// async function menuLopp() {
-//   const response = await question(`
-//   Selecione uma das opções abaixo:
-//   [1] - Exibir catálogo de veículos
-//   [2] - Adicionar veículo ao catálogo
-//   [3] - Editar veículo existente
-//   [4] - Excluir um veículo do catálogo
-//   [Q] - Sair
-
-//   : `);
-
-//   if (Number(response) === 1) {
-//     showVehiclesCatalog();
-//   }
-
-//   if (response.toLowerCase() === 'q') {
-//     terminal.close();
-//     return;
-//   }
-
-//   return menuLopp();
-// }
-
-// const DEFAULT_LANGUAGE = 'pt-BR';
+import Dialog from './constants/dialog.js';
 
 // // Inicializando Draftlog
 // Draftlog(console).addLineListener(process.stdin);
@@ -101,19 +51,38 @@ import PrinterComponent from './classes/printer-component/printer-component.js';
 // }
 
 export default class App {
-  constructor(printerComponent) {
+  constructor({ printerComponent, terminalController }) {
     this.printerComponent = printerComponent;
+    this.terminalController = terminalController;
   }
 
   async initialize() {
-    const terminal = readline.createInterface({ input, output, terminal: false });
-    const question = (msg) => {
-      return new Promise((resolve) => terminal.question(msg, resolve));
-    };
+    const nome = this.terminalController.question(msg);
+    console.log({ nome });
+    this.printerComponent.printWelcomeMessage(nome);
 
-    const nome = await question('Qual o seu nome? ');
-    this.printerComponent.printHighlight(nome);
+    // return this.menuLopp();
   }
+
+  // async #question(msg) {
+  //   await this.terminalController.question(msg);
+  // }
+
+  // async menuLopp() {
+  //   const response = await this.#question(Dialog.LIST_MENU_AND_ASK_BY_OPTION);
+  //   console.log({ response });
+
+  //   if (Number(response) === 1) {
+  //     showVehiclesCatalog();
+  //   }
+
+  //   if (response.toLowerCase() === 'q') {
+  //     terminal.close();
+  //     return;
+  //   }
+
+  //   return menuLopp();
+  // }
 }
 
 // Para funcionar essa sintaxe de chamar o await fora do async deve utilizar a flag --experimental-top-level-await no package.json
