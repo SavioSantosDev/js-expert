@@ -7,7 +7,7 @@ Projeto de linha de comando onde o usuário submete os valores no terminal, impr
 
 ## Vehicles Catalog
 
-Desenvolver aplicação via linha de comando para permitir o usuário cadastrar veiculos em um arquivo .json.
+Desenvolver aplicação via linha de comando para permitir o usuário cadastrar veiculos.
 
 Cada veículo deve ter: Id, Nome, Cores disponíveis, Data de fabricação, KM rodados e atributos de controle (quem e quando foi criado).
 
