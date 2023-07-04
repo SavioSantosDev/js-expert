@@ -1,7 +1,6 @@
 import { createInterface, Interface } from 'readline';
 import TerminalController from './terminal-controller';
-import { stdin as input, stdout as output } from 'node:process';
-import { Abortable } from 'events';
+import { stdin as input } from 'node:process';
 
 describe(TerminalController.name, () => {
   let terminalController: TerminalController;
@@ -29,7 +28,7 @@ describe(TerminalController.name, () => {
         (_, cb) => (questionCallback = cb)
       );
 
-      terminalController.question(question).subscribe({ next: (q) => (questionResponse = q) });
+      terminalController.question(question).subscribe({ next: (r) => (questionResponse = r) });
     });
 
     it('Should call the "question" method of readline interface', () => {

@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "npx nodemon --ignore database.json --exec node --experimental-json-modules --experimental-top-level-await src/app/app.js",
+    "dev": "ts-node ./src/app/app.ts --transpile-only --ignore-watch node_modules",
+    "dev:js": "npx nodemon --ignore database.json --exec node --experimental-json-modules --experimental-top-level-await src/app/app.js",
     "test": "npx mocha -w --parallel src/tests/*.test.js",
     "test:cov": "npx nyc npx mocha -r reify --parallel test/*.test.js"
   },
