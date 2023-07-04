@@ -1,7 +1,7 @@
 export default class Dialog {
-  static ASK_BY_NAME = 'Qual o seu nome? ';
+  static readonly ASK_BY_NAME = 'Qual o seu nome? ';
 
-  static LIST_MENU_AND_ASK_BY_OPTION = `
+  static readonly LIST_MENU_AND_ASK_BY_OPTION = `
     Selecione uma das opções abaixo:
     [1] - Exibir catálogo de veículos
     [2] - Adicionar veículo ao catálogo

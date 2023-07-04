@@ -1,16 +1,16 @@
 import { createInterface, Interface } from 'readline';
-import TerminalController from './terminal-controller';
+import TerminalService from './terminal.service';
 import { stdin as input } from 'node:process';
 
-describe(TerminalController.name, () => {
-  let terminalController: TerminalController;
+describe(TerminalService.name, () => {
+  let terminalController: TerminalService;
 
   let readlineInterface: Interface;
 
   beforeEach(() => {
     readlineInterface = createInterface({ input });
 
-    terminalController = new TerminalController(readlineInterface);
+    terminalController = new TerminalService(readlineInterface);
   });
 
   afterEach(() => readlineInterface.close());
