@@ -1,4 +1,4 @@
-export default class Dialog {
+export class Dialog {
   static readonly ASK_BY_NAME = 'Qual o seu nome? ';
 
   static readonly LIST_MENU_AND_ASK_BY_OPTION = `

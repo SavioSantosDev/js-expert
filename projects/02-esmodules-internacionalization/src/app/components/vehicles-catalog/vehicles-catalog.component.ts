@@ -1,8 +1,8 @@
 import { Observable, take, tap } from 'rxjs';
-import Dialog from 'src/app/constants/dialog';
+import { Dialog } from 'src/app/constants';
 import { PrinterService, TerminalService } from 'src/app/models';
 
-export default class VehiclesCatalogComponent {
+export class VehiclesCatalogComponent {
   constructor(private readonly printerService: PrinterService, private readonly terminalService: TerminalService) {
     this.handleWelcomeMessage()
       .pipe(take(1))
@@ -14,6 +14,6 @@ export default class VehiclesCatalogComponent {
   private handleWelcomeMessage(): Observable<string> {
     return this.terminalService
       .question(Dialog.ASK_BY_NAME)
-      .pipe(tap((name) => this.printerService.printHighlightMessage(name)));
+      .pipe(tap((name) => this.printerService.printWelcomeMessage(name)));
   }
 }
