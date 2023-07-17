@@ -1,5 +1,5 @@
-import { Vehicle } from '../classes';
+import { Vehicle, VehicleFormatted } from '../classes';
 
 export interface VehicleService {
-  listAllVehicles(): Vehicle[];
+  listAllVehicles(): VehicleFormatted[];
 }
