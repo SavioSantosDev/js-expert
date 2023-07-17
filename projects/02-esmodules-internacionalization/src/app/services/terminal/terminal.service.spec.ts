@@ -1,16 +1,17 @@
 import { createInterface, Interface } from 'readline';
-import TerminalService from './terminal.service';
 import { stdin as input } from 'node:process';
+import { TerminalService } from '../../models';
+import { TerminalServiceImpl } from './terminal.service';
 
-describe(TerminalService.name, () => {
-  let terminalController: TerminalService;
+describe(TerminalServiceImpl.name, () => {
+  let terminalService: TerminalService;
 
   let readlineInterface: Interface;
 
   beforeEach(() => {
     readlineInterface = createInterface({ input });
 
-    terminalController = new TerminalService(readlineInterface);
+    terminalService = new TerminalServiceImpl(readlineInterface);
   });
 
   afterEach(() => readlineInterface.close());
@@ -28,7 +29,7 @@ describe(TerminalService.name, () => {
         (_, cb) => (questionCallback = cb)
       );
 
-      terminalController.question(question).subscribe({ next: (r) => (questionResponse = r) });
+      terminalService.question(question).subscribe({ next: (r) => (questionResponse = r) });
     });
 
     it('Should call the "question" method of readline interface', () => {

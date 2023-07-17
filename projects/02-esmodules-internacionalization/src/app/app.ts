@@ -1,7 +1,7 @@
 import { stdin as input, stdout as output } from 'node:process';
 import readline from 'readline';
-import VehiclesCatalogComponent from './components/vehicles-catalog/vehicles-catalog.component';
-import { PrinterServiceImpl, TerminalServiceImpl } from './services';
+import { PrinterServiceImpl, TerminalServiceImpl, VehicleServiceImpl } from './services';
+import { VehiclesCatalogComponent } from './components';
 
 const printerService = new PrinterServiceImpl();
 
@@ -9,5 +9,7 @@ const printerService = new PrinterServiceImpl();
 // private readonly terminal = readline.createInterface({ input, output, terminal: false });
 const terminal = readline.createInterface({ input, output, terminal: false });
 const terminalService = new TerminalServiceImpl(terminal);
+const vechicleService = new VehicleServiceImpl();
 
-new VehiclesCatalogComponent(printerService, terminalService);
+const component = new VehiclesCatalogComponent(printerService, terminalService, vechicleService);
+component.initialize();

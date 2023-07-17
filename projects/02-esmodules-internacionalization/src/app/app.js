@@ -1,5 +1,5 @@
 // import Draftlog from 'draftlog';
-// import ChalkTable from 'chalk-table';
+import ChalkTable from 'chalk-table';
 import readline from 'readline';
 // import database from '../database.json' assert { type: 'json' };
 // import Person from './classes/person/person.js';
