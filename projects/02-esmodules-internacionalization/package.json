@@ -4,9 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "ts-node ./src/app/app.ts --transpile-only --ignore-watch node_modules",
+    "dev": "ts-node-dev ./src/app/app.ts --transpile-only --ignore-watch node_modules",
     "dev:js": "npx nodemon --ignore database.json --exec node --experimental-json-modules --experimental-top-level-await src/app/app.js",
-    "test": "npx mocha -w --parallel src/tests/*.test.js",
+    "test": "npx jest",
     "test:cov": "npx nyc npx mocha -r reify --parallel test/*.test.js"
   },
   "dependencies": {
@@ -22,7 +22,7 @@
     "jest": "^29.5.0",
     "nodemon": "^2.0.6",
     "rxjs": "^7.8.1",
-    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.1.3"
   }
 }

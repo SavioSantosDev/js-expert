@@ -18,7 +18,7 @@ Após inicializado a aplicação, deve, a toda pergunta, exibir uma lista de op�
 
 ### 1: Exibir lista de veículos
 
-- Se não houverem dados, exibir a mensagem: "Nenhum veículo cadastrado. Digite "2" para cadastrar um novo veículo.
+- Se não houverem dados, exibir a mensagem: "Parece que nenhum veículo foi cadastrado."
 - Se houverem dados, exibir em formato de tabelas todas as informações formatadas.
 
 ### 2: Salvar um novo registro

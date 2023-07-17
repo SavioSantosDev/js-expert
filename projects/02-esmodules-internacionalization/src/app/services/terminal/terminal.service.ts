@@ -1,6 +1,6 @@
 import { Interface } from 'readline';
 import { Observable } from 'rxjs';
-import { TerminalService } from 'src/app/models';
+import { TerminalService } from '../../models';
 
 export class TerminalServiceImpl implements TerminalService {
   constructor(private readonly terminal: Interface) {}

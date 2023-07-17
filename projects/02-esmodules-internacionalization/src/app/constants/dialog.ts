@@ -1,7 +1,7 @@
-export class Dialog {
-  static readonly ASK_BY_NAME = 'Qual o seu nome? ';
+export namespace Dialog {
+  export const ASK_BY_NAME = 'Qual o seu nome? ';
 
-  static readonly LIST_MENU_AND_ASK_BY_OPTION = `
+  export const LIST_MENU_AND_ASK_BY_OPTION = `
     Selecione uma das opções abaixo:
     [1] - Exibir catálogo de veículos
     [2] - Adicionar veículo ao catálogo
@@ -10,4 +10,6 @@ export class Dialog {
     [Q] - Sair
   
     : `;
+
+  export const VEHICLE_EMPTY_LIST_MESSAGE = 'Parece que nenhum veículo foi cadastrado.';
 }
