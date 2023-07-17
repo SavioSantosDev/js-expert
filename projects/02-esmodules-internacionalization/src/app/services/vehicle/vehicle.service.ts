@@ -1,12 +1,12 @@
 import { Observable } from 'rxjs';
 import { writeFile, readFile } from 'fs/promises';
 import { VehicleService } from '../../models';
-import { Vehicle } from '../../classes';
+import { Vehicle, VehicleFormatted } from '../../classes';
 import database from '../../../database/vehicles.json';
 
 export class VehicleServiceImpl implements VehicleService {
-  listAllVehicles(): Vehicle[] {
-    return database.map((item) => new Vehicle(item));
+  listAllVehicles(): VehicleFormatted[] {
+    return database.map((item) => new Vehicle(item).format('pt-br'));
   }
 
   // export const save = async (data) => {
