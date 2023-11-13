@@ -1,5 +1,5 @@
 import { Interface } from 'readline';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { TerminalService } from '../../models';
 
 export class TerminalServiceImpl implements TerminalService {
@@ -12,6 +12,10 @@ export class TerminalServiceImpl implements TerminalService {
         observer.complete();
       });
     });
+  }
+
+  confirm(msg: string): Observable<boolean> {
+    return this.question(msg).pipe(map((answer) => answer === 's'));
   }
 
   close(): void {

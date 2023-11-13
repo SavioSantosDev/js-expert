@@ -12,6 +12,7 @@ Desenvolver aplicação via linha de comando para permitir o usuário cadastrar 
 Cada veículo deve ter: Id, Nome, Cores disponíveis, Data de fabricação, KM rodados e atributos de controle (quem e quando foi criado).
 
 1 - Deve inicializar perguntando o nome do usuário.
+
 2 - Após digitar o nome, deve imprimir uma mensagem de boas vindas.
 
 Após inicializado a aplicação, deve, a toda pergunta, exibir uma lista de opções:

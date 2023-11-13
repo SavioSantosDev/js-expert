@@ -2,19 +2,6 @@ import chalk from 'chalk';
 import { TableOptions } from 'src/app/models';
 import { FormatUtil } from '../../utils/format-util';
 
-interface VehicleDto {
-  id: number;
-  name: string;
-  colors: string[];
-  kmTravelled: number;
-  manufacturingDate: string;
-  createdDate: string;
-  createdBy: string;
-  modifiedDate: string;
-  modifiedBy: string;
-  version: number;
-}
-
 export interface VehicleFormatted {
   id: number;
   name: string;
@@ -25,19 +12,14 @@ export interface VehicleFormatted {
 
 export class Vehicle {
   id?: number;
-  createdDate?: Date;
-  createdBy?: string;
-  modifiedDate?: Date;
-  modifiedBy?: string;
-  version?: number;
 
   name!: string;
   colors!: string[];
   kmTravelled!: number;
   manufacturingDate!: Date;
 
-  constructor(dto: VehicleDto) {
-    Object.assign(this, { ...dto, manufacturingDate: new Date(dto.manufacturingDate) });
+  constructor(dto: Partial<Vehicle>) {
+    Object.assign(this, { ...dto, manufacturingDate: new Date(dto.manufacturingDate!) });
   }
 
   static readonly tableOptions: TableOptions = {

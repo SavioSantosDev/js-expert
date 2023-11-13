@@ -1,5 +1,8 @@
-import { Vehicle, VehicleFormatted } from '../classes';
+import { Observable } from 'rxjs';
+import { Vehicle } from '../classes';
 
 export interface VehicleService {
-  listAllVehicles(): VehicleFormatted[];
+  listAllVehicles(): Observable<Vehicle[]>;
+
+  save(vehicle: Vehicle): Observable<Vehicle>;
 }

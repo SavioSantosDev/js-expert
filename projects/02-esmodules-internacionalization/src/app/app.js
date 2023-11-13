@@ -1,11 +1,11 @@
 // import Draftlog from 'draftlog';
-import ChalkTable from 'chalk-table';
-import readline from 'readline';
-// import database from '../database.json' assert { type: 'json' };
-// import Person from './classes/person/person.js';
-import { stdin as input, stdout as output } from 'node:process';
-import PrinterComponent from './classes/printer-component/printer-component.js';
-import Dialog from './constants/dialog.js';
+// import ChalkTable from 'chalk-table';
+// import readline from 'readline';
+// // import database from '../database.json' assert { type: 'json' };
+// // import Person from './classes/person/person.js';
+// import { stdin as input, stdout as output } from 'node:process';
+// import PrinterComponent from './classes/printer-component/printer-component.js';
+// import Dialog from './constants/dialog.js';
 
 // // Inicializando Draftlog
 // Draftlog(console).addLineListener(process.stdin);
