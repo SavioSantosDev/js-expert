@@ -1,9 +1,9 @@
-import { PrinterServiceMock, TerminalServiceMock, VehicleMock, VehicleServiceMock } from 'src/app/mocks';
-import { VehiclesCatalogComponent } from './vehicles-catalog.component';
-import { Dialog } from 'src/app/constants';
-import exp from 'constants';
-import { VehicleCatalogMenu } from 'src/app/models';
+import { Subject, take } from 'rxjs';
 import { Vehicle } from 'src/app/classes';
+import { Dialog } from 'src/app/constants';
+import { PrinterServiceMock, TerminalServiceMock, VehicleMock, VehicleServiceMock } from 'src/app/mocks';
+import { VehicleCatalogMenu } from 'src/app/models';
+import { VehiclesCatalogComponent } from './vehicles-catalog.component';
 
 describe('VehiclesCatalogComponent', () => {
   let component: VehiclesCatalogComponent;
@@ -63,12 +63,8 @@ describe('VehiclesCatalogComponent', () => {
     });
 
     describe('When the user list vehicles', () => {
-      let vehicles: Vehicle[];
-
       beforeEach(() => {
         terminalServiceMock.question.mockClear();
-
-        vehicleServiceMock.listAllVehicles.mockReturnValue(vehicles);
         terminalServiceMock.question$.next(VehicleCatalogMenu.LIST);
       });
 
@@ -77,50 +73,108 @@ describe('VehiclesCatalogComponent', () => {
       });
 
       describe('If dont have any vehicle registered', () => {
-        beforeAll(() => {
-          vehicles = [];
+        beforeEach(() => {
+          vehicleServiceMock.listAllVehicles$.next([]);
         });
 
-        it('Should display an empty list message', () => {
+        it('Should display an empty list message, and, display the options list again', () => {
           expect(printerServiceMock.printNormalMessage).toBeCalledTimes(1);
           expect(printerServiceMock.printNormalMessage).toBeCalledWith(Dialog.VEHICLE_EMPTY_LIST_MESSAGE);
-        });
 
-        it('Should display the options list again', () => {
           expect(terminalServiceMock.question).toBeCalledTimes(1);
           expect(terminalServiceMock.question).toBeCalledWith(Dialog.LIST_MENU_AND_ASK_BY_OPTION);
         });
       });
 
       describe('If there are registered vehicles', () => {
-        beforeAll(() => {
-          vehicles = VehicleMock.getList(10);
+        const vehicles = VehicleMock.getList(10);
+
+        beforeEach(() => {
+          vehicleServiceMock.listAllVehicles$.next(vehicles);
         });
 
-        it('Should display the table of all vehicles registered', () => {
+        it('Should display the table of all vehicles registered, and, display the options list again', () => {
           expect(printerServiceMock.printTable).toBeCalledTimes(1);
-          expect(printerServiceMock.printTable).toBeCalledWith(Vehicle.tableOptions, vehicles);
-        });
+          expect(printerServiceMock.printTable).toBeCalledWith(
+            Vehicle.tableOptions,
+            vehicles.map((v) => v.format('pt-br'))
+          );
 
-        it('Should display the options list again', () => {
           expect(terminalServiceMock.question).toBeCalledTimes(1);
           expect(terminalServiceMock.question).toBeCalledWith(Dialog.LIST_MENU_AND_ASK_BY_OPTION);
         });
       });
     });
 
-    describe('When close de app', () => {
+    describe('When the user register an vehicle', () => {
+      let questions: Subject<string>[];
+
+      beforeEach(() => {
+        questions = [];
+
+        terminalServiceMock.question.mockClear();
+        terminalServiceMock.question.mockImplementation((q) => {
+          const question = new Subject<string>();
+          questions.push(question);
+          return question.pipe(take(1));
+        });
+
+        terminalServiceMock.question$.next(VehicleCatalogMenu.ADD);
+      });
+
+      describe('And answer all questions correctly', () => {
+        const [name, colors, kmTravelled, manufacturingDate] = ['Mercedez', 'Branco, Preto', '20', '01-01-2023'];
+
+        const vehicleRegistered = new Vehicle({
+          name,
+          colors: ['Branco', 'Preto'],
+          kmTravelled: 20,
+          manufacturingDate: '01-01-2023',
+          ...({} as any),
+        });
+
+        beforeEach(() => {
+          questions[0].next(name);
+          questions[1].next(colors);
+          questions[2].next(kmTravelled);
+          questions[3].next(manufacturingDate);
+
+          terminalServiceMock.confirm$.next(true);
+
+          vehicleServiceMock.save$.next(vehicleRegistered);
+        });
+
+        it('Should request the all vehicle properties', () => {
+          expect(terminalServiceMock.question).toBeCalledWith(Dialog.RegisterVehicle.ASK_BY_NAME);
+          expect(terminalServiceMock.question).toBeCalledWith(Dialog.RegisterVehicle.ASK_BY_COLORS);
+          expect(terminalServiceMock.question).toBeCalledWith(Dialog.RegisterVehicle.ASK_BY_KM_TRAVALLED);
+          expect(terminalServiceMock.question).toBeCalledWith(Dialog.RegisterVehicle.ASK_BY_MANUFACTURING_DATE);
+          expect(terminalServiceMock.confirm).toBeCalledWith(Dialog.RegisterVehicle.CONFIRM);
+        });
+
+        it('Should display the vehicle registered and list the options again', () => {
+          expect(vehicleServiceMock.save).toBeCalledTimes(1);
+          expect(vehicleServiceMock.save).toBeCalledWith(expect.any(Vehicle));
+
+          expect(printerServiceMock.printTable).toBeCalledWith(Vehicle.tableOptions, [
+            vehicleRegistered.format('pt-br'),
+          ]);
+
+          expect(terminalServiceMock.question).toBeCalledWith(Dialog.LIST_MENU_AND_ASK_BY_OPTION);
+        });
+      });
+    });
+
+    describe('When close the app', () => {
       beforeEach(() => {
         printerServiceMock.printWelcomeMessage.mockClear();
 
         terminalServiceMock.question$.next(VehicleCatalogMenu.CLOSE);
       });
 
-      it('Should close the terminal', () => {
+      it('Should close the terminal nad complete all subscriptions', () => {
         expect(terminalServiceMock.close).toBeCalledTimes(1);
-      });
 
-      it('Should complete all subscriptions', () => {
         terminalServiceMock.question$.next(VehicleCatalogMenu.LIST);
         expect(printerServiceMock.printNormalMessage).not.toBeCalled();
         expect(printerServiceMock.printTable).not.toBeCalled();

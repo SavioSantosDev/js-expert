@@ -1,21 +1,39 @@
-import { Observable } from 'rxjs';
-import { writeFile, readFile } from 'fs/promises';
+import { readFile, writeFile } from 'fs/promises';
+import { Observable, from, map, switchMap, take, tap } from 'rxjs';
+import { Vehicle } from '../../classes';
 import { VehicleService } from '../../models';
-import { Vehicle, VehicleFormatted } from '../../classes';
-import database from '../../../database/vehicles.json';
 
+interface Database {
+  sequence: number;
+  vehicles: Vehicle[];
+}
 export class VehicleServiceImpl implements VehicleService {
-  listAllVehicles(): VehicleFormatted[] {
-    return database.map((item) => new Vehicle(item).format('pt-br'));
+  constructor(private readonly dataBasePath: string) {}
+
+  listAllVehicles(): Observable<Vehicle[]> {
+    return this.readFile().pipe(map(({ vehicles }) => vehicles.map((item) => new Vehicle(item))));
   }
 
-  // export const save = async (data) => {
-  //   // Não tem __filename e __dirname
+  save(vehicle: Vehicle): Observable<Vehicle> {
+    return this.readFile().pipe(
+      tap((database) => (vehicle.id = database.sequence + 1)),
+      tap((currentData) => currentData.vehicles.push(vehicle)),
+      switchMap(this.writeFile),
+      take(1),
+      map(() => vehicle)
+    );
+  }
 
-  //   const { pathname: databaseFile } = new URL('./../database.json', import.meta.url);
-  //   const currentData = JSON.parse(await readFile(databaseFile));
-  //   currentData.push(data);
+  private getNexId(database: Database): number {
+    return database.sequence + 1;
+  }
 
-  //   await writeFile(databaseFile, JSON.stringify(currentData));
-  // };
+  private readFile(): Observable<Database> {
+    return from(readFile(this.dataBasePath)).pipe(map((file) => JSON.parse(file as any)));
+  }
+
+  private writeFile = (database: Database): Promise<void> => {
+    database.sequence++;
+    return writeFile(this.dataBasePath, JSON.stringify(database));
+  };
 }

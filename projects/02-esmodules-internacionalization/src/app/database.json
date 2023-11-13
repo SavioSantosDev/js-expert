@@ -1,0 +1,26 @@
+{
+  "sequence": 3,
+  "vehicles": [
+    {
+      "id": 1,
+      "name": "Carro",
+      "colors": ["black", "red", "green"],
+      "kmTravelled": 10000,
+      "manufacturingDate": "2020-01-01T00:00:00.000"
+    },
+    {
+      "id": 2,
+      "name": "Carro",
+      "colors": ["black", "red", "green"],
+      "kmTravelled": 10000,
+      "manufacturingDate": "2020-01-01T00:00:00.000"
+    },
+    {
+      "id": 3,
+      "name": "Teste",
+      "colors": ["Azul"],
+      "kmTravelled": 100,
+      "manufacturingDate": "2001-11-02T02:00:00.000Z"
+    }
+  ]
+}

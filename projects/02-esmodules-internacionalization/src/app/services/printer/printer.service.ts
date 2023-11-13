@@ -1,8 +1,8 @@
 import chalk from 'chalk';
 // @ts-ignore
 import ChalkTable from 'chalk-table';
-import { PrinterService } from '../../models';
 import DraftLog from 'draftlog';
+import { PrinterService } from '../../models';
 
 export class PrinterServiceImpl implements PrinterService {
   private readonly LINE_WIDTH = 100;

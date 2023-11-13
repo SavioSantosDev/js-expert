@@ -1,5 +1,6 @@
-import { createInterface, Interface } from 'readline';
 import { stdin as input } from 'node:process';
+import { createInterface, Interface } from 'readline';
+import { Subject } from 'rxjs';
 import { TerminalService } from '../../models';
 import { TerminalServiceImpl } from './terminal.service';
 
@@ -46,6 +47,43 @@ describe(TerminalServiceImpl.name, () => {
 
       it('Should return the answer', () => {
         expect(questionResponse).toBe(answer);
+      });
+    });
+  });
+
+  describe('Given a confirmation question', () => {
+    const question = 'Confirm? [S | N]';
+
+    let question$: Subject<string>;
+    let confirmationSpy: jest.Mock;
+
+    beforeEach(() => {
+      question$ = new Subject();
+      jest.spyOn(terminalService, 'question').mockImplementation(() => question$);
+
+      confirmationSpy = jest.fn();
+      terminalService.confirm(question).subscribe({ next: confirmationSpy });
+    });
+
+    describe('When confirm', () => {
+      beforeEach(() => {
+        question$.next('s');
+      });
+
+      it('Should return true', () => {
+        expect(confirmationSpy).toBeCalledTimes(1);
+        expect(confirmationSpy).toBeCalledWith(true);
+      });
+    });
+
+    describe('When decline', () => {
+      beforeEach(() => {
+        question$.next('n');
+      });
+
+      it('Should return false', () => {
+        expect(confirmationSpy).toBeCalledTimes(1);
+        expect(confirmationSpy).toBeCalledWith(false);
       });
     });
   });
