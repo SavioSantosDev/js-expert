@@ -165,6 +165,50 @@ describe('VehiclesCatalogComponent', () => {
       });
     });
 
+    describe('When the user delete an vehicle', () => {
+      beforeEach(() => {
+        terminalServiceMock.question.mockClear();
+        terminalServiceMock.question$.next(VehicleCatalogMenu.DELETE);
+      });
+
+      it('Should ask for the vehicle ID', () => {
+        expect(terminalServiceMock.question).toBeCalledTimes(1);
+        expect(terminalServiceMock.question).toBeCalledWith(Dialog.DeleteVehicle.ASK_BY_ID);
+      });
+
+      describe('And input a non-existent vehicle', () => {
+        beforeEach(() => {
+          terminalServiceMock.question$.next('123');
+          vehicleServiceMock.delete$.next(false);
+        });
+
+        it('Should print a message of vehicle not found and the options again', () => {
+          expect(printerServiceMock.printNormalMessage).toBeCalledTimes(1);
+          expect(printerServiceMock.printNormalMessage).toBeCalledWith(Dialog.VEHICLE_NOT_FOUND);
+
+          expect(terminalServiceMock.question).toBeCalledWith(Dialog.LIST_MENU_AND_ASK_BY_OPTION);
+        });
+      });
+
+      describe('And input a valid vehicle', () => {
+        const vehicle = VehicleMock.withName;
+
+        beforeEach(() => {
+          terminalServiceMock.question$.next('123');
+          vehicleServiceMock.delete$.next(vehicle);
+        });
+
+        it('Should display the name of vehicle removed and show options again', () => {
+          expect(printerServiceMock.printNormalMessage).toBeCalledTimes(1);
+          expect(printerServiceMock.printNormalMessage).toBeCalledWith(
+            Dialog.DeleteVehicle.VEHICLE_REMOVED.replace('{name}', vehicle.name)
+          );
+
+          expect(terminalServiceMock.question).toBeCalledWith(Dialog.LIST_MENU_AND_ASK_BY_OPTION);
+        });
+      });
+    });
+
     describe('When close the app', () => {
       beforeEach(() => {
         printerServiceMock.printWelcomeMessage.mockClear();

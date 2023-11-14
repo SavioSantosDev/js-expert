@@ -11,29 +11,44 @@ export class VehicleServiceImpl implements VehicleService {
   constructor(private readonly dataBasePath: string) {}
 
   listAllVehicles(): Observable<Vehicle[]> {
-    return this.readFile().pipe(map(({ vehicles }) => vehicles.map((item) => new Vehicle(item))));
+    return this.readDatabase().pipe(map(({ vehicles }) => vehicles.map((item) => new Vehicle(item))));
   }
 
   save(vehicle: Vehicle): Observable<Vehicle> {
-    return this.readFile().pipe(
+    return this.readDatabase().pipe(
       tap((database) => (vehicle.id = database.sequence + 1)),
       tap((currentData) => currentData.vehicles.push(vehicle)),
-      switchMap(this.writeFile),
+      tap((database) => database.sequence++),
+      switchMap(this.saveDatabase),
       take(1),
       map(() => vehicle)
     );
   }
 
-  private getNexId(database: Database): number {
-    return database.sequence + 1;
-  }
-
-  private readFile(): Observable<Database> {
+  private readDatabase(): Observable<Database> {
     return from(readFile(this.dataBasePath)).pipe(map((file) => JSON.parse(file as any)));
   }
 
-  private writeFile = (database: Database): Promise<void> => {
-    database.sequence++;
+  private saveDatabase = (database: Database): Promise<void> => {
     return writeFile(this.dataBasePath, JSON.stringify(database));
   };
+
+  delete(vehicleId: number): Observable<Vehicle | false> {
+    let vehicleRemoved: Vehicle;
+
+    return this.readDatabase().pipe(
+      map((database) => ({
+        ...database,
+        vehicles: database.vehicles.filter((vehicle) => {
+          const isVehicleToRemove = vehicle.id === vehicleId;
+          if (isVehicleToRemove) {
+            vehicleRemoved = vehicle;
+          }
+          return !isVehicleToRemove;
+        }),
+      })),
+      switchMap(this.saveDatabase),
+      map(() => vehicleRemoved || false)
+    );
+  }
 }

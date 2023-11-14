@@ -30,13 +30,7 @@ Após inicializado a aplicação, deve, a toda pergunta, exibir uma lista de op�
 - Confirmando a operação, deve printar uma mensagem "Veículo cadastrado com sucesso:" e uma tabela apenas com o registro salvo.
 - Exibir as opções novamente.
 
-### 3: Editar um registro existente
-
-- Deve perguntar: "Qual o ID do veículo que deseja editar?"
-- Imprimir mensagem "Veículo não encontrado com ID { id }" caso não exista o veículo
-- Exibir os mesmos campos de cadastro e a linha de confirmação perguntando: "Confirma as alterações feitas? [S - Sim] [N - Não]"
-
-### 4: Excluir
+### 3: Excluir
 
 - Deve perguntar: "Qual o ID do veículo que deseja excluir?"
 - Imprimir mensagem "Veículo não encontrado com ID { id }" caso não exista o veículo

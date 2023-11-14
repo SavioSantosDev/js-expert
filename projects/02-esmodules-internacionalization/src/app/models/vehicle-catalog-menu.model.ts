@@ -1,7 +1,6 @@
 export enum VehicleCatalogMenu {
   LIST = '1',
   ADD = '2',
-  UPDATE = '3',
-  DELETE = '4',
+  DELETE = '3',
   CLOSE = 'q',
 }

@@ -5,4 +5,6 @@ export interface VehicleService {
   listAllVehicles(): Observable<Vehicle[]>;
 
   save(vehicle: Vehicle): Observable<Vehicle>;
+
+  delete(vehicleId: number): Observable<Vehicle | false>;
 }

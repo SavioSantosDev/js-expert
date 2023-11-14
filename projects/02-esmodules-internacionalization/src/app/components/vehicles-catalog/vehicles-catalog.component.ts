@@ -39,14 +39,11 @@ export class VehiclesCatalogComponent {
     const options: { [key in VehicleCatalogMenu]: () => Observable<void> } = {
       [VehicleCatalogMenu.LIST]: this.list,
       [VehicleCatalogMenu.ADD]: this.add,
-      [VehicleCatalogMenu.UPDATE]: () => of(undefined),
-      [VehicleCatalogMenu.DELETE]: () => of(undefined),
+      [VehicleCatalogMenu.DELETE]: this.delete,
       [VehicleCatalogMenu.CLOSE]: () => of(undefined),
     };
 
-    return optionSelected in options
-      ? options[optionSelected as VehicleCatalogMenu]().pipe(switchMap(() => of(undefined)))
-      : of(undefined);
+    return optionSelected in options ? options[optionSelected as VehicleCatalogMenu]() : of(undefined);
   };
 
   private list = (): Observable<void> => {
@@ -102,6 +99,20 @@ export class VehiclesCatalogComponent {
       takeWhile((confirmed) => !!confirmed),
       switchMap(() => this.vehicleService.save(new Vehicle(vehicleDto))),
       tap((vehicle) => this.printerService.printTable(Vehicle.tableOptions, [vehicle.format('pt-br')]))
+    );
+  };
+
+  private delete = (): Observable<void> => {
+    return this.terminalService.question(Dialog.DeleteVehicle.ASK_BY_ID).pipe(
+      switchMap((vehicleId) => this.vehicleService.delete(Number(vehicleId))),
+      tap((vehicleRemoved) =>
+        vehicleRemoved
+          ? this.printerService.printNormalMessage(
+              Dialog.DeleteVehicle.VEHICLE_REMOVED.replace('{name}', String(vehicleRemoved.name))
+            )
+          : this.printerService.printNormalMessage(Dialog.VEHICLE_NOT_FOUND)
+      ),
+      map(() => undefined)
     );
   };
 }
