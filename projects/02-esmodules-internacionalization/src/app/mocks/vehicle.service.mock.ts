@@ -8,4 +8,7 @@ export class VehicleServiceMock implements VehicleService {
 
   readonly save$ = new Subject<Vehicle>();
   readonly save = jest.fn(() => this.save$.pipe(take(1)));
+
+  readonly delete$ = new Subject<Vehicle | false>();
+  readonly delete = jest.fn(() => this.delete$.pipe(take(1)));
 }
