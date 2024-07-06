@@ -1,0 +1,3 @@
+{ writable: 'this is my' }
+{ writable: 'custom readable' }
+Process finished!
