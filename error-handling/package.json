@@ -1,0 +1,14 @@
+{
+  "name": "error-handling",
+  "version": "1.0.0",
+  "main": "1-server-error.js",
+  "type": "module",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "mongodb": "^6.8.0"
+  }
+}
