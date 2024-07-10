@@ -1,0 +1,16 @@
+{
+  "name": "performance",
+  "version": "1.0.0",
+  "description": "- Análise estática de código: Analisar a qualidade e performance olhando diretamente para o código. - Análise dinâmica de código: Uso de ferramentas para analisar a performance do código em tempo de execução. - Análise de conexões externas: Avaliar o tempo para conectar em banco de dados, apis ou qualquer outra fonte q dependa de internet.",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "benchmark": "^2.1.4",
+    "uuid": "^9.0.1"
+  }
+}
