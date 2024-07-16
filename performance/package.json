@@ -1,10 +1,15 @@
 {
   "name": "performance",
   "version": "1.0.0",
-  "description": "- Análise estática de código: Analisar a qualidade e performance olhando diretamente para o código. - Análise dinâmica de código: Uso de ferramentas para analisar a performance do código em tempo de execução. - Análise de conexões externas: Avaliar o tempo para conectar em banco de dados, apis ou qualquer outra fonte q dependa de internet.",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "CLIMEM=9000 node -r climem 3.memory-leak.js",
+    "climem": "npx climem 9000",
+    "test": "npx autocannon -c 10 -d 10 -p 10 http://localhost:3000",
+    "flame-0x": "npx 0x -- node 3.memory-leak.js",
+    "clinic-doctor": "npx clinic doctor -- node 3.memory-leak.js",
+    "clinic-flame": "npx clinic flame -- node 3.memory-leak.js",
+    "clinic-heapprofiler": "npx clinic heapprofiler -- node 3.memory-leak.js"
   },
   "keywords": [],
   "author": "",
@@ -12,5 +17,11 @@
   "dependencies": {
     "benchmark": "^2.1.4",
     "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "0x": "^5.7.0",
+    "autocannon": "^7.15.0",
+    "climem": "^2.0.0",
+    "clinic": "^13.0.0"
   }
 }
