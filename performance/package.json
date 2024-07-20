@@ -5,7 +5,7 @@
   "scripts": {
     "start": "CLIMEM=9000 node -r climem 3.memory-leak.js",
     "climem": "npx climem 9000",
-    "test": "npx autocannon -c 10 -d 10 -p 10 http://localhost:3000",
+    "autocannon": "npx autocannon -c 10 -d 10 -p 10 http://localhost:3000",
     "flame-0x": "npx 0x -- node 3.memory-leak.js",
     "clinic-doctor": "npx clinic doctor -- node 3.memory-leak.js",
     "clinic-flame": "npx clinic flame -- node 3.memory-leak.js",
